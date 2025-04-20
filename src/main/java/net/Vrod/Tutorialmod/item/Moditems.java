@@ -21,7 +21,7 @@ public class Moditems {
     public static final RegistryObject<Item> RAW_SAPPHIRE = ITEMS.register("raw_sapphire",
             () -> new Item(new Item.Properties()));
 
-    public static  void register(IEventBus eventBus) {
+    public static void register(IEventBus eventBus) {
             ITEMS.register(eventBus); // EventBus in Java facilitates communication between different components of an application
 
         }
