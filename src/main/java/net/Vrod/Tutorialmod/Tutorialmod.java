@@ -1,6 +1,7 @@
 package net.Vrod.Tutorialmod;
 
 import com.mojang.logging.LogUtils;
+import net.Vrod.Tutorialmod.item.ModCreativeModTabs;
 import net.Vrod.Tutorialmod.item.Moditems;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,6 +27,7 @@ public class Tutorialmod {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         Moditems.register(modEventBus); // This makes sure that the items are checked via the bus and actually added to the game.
+        ModCreativeModTabs.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -47,6 +49,7 @@ public class Tutorialmod {
 
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) { //Adds the SAPPHIRE item to the creative mode Ingredients tab during the appropriate event.
             event.accept(Moditems.SAPPHIRE);
+            event.accept(Moditems.RAW_SAPPHIRE);
         }
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
