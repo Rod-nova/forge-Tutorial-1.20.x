@@ -1,6 +1,8 @@
 package net.Vrod.Tutorialmod;
 
 import com.mojang.logging.LogUtils;
+import net.Vrod.Tutorialmod.item.Moditems;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -17,11 +19,13 @@ import org.slf4j.Logger;
 @Mod(Tutorialmod.MOD_ID)
 public class Tutorialmod {
     // Define mod id in a common place for everything to reference
-    public static final String MOD_ID = "tutmod";
+    public static final String MOD_ID = "tutorialmod";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
     public Tutorialmod(){
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        Moditems.register(modEventBus); // This makes sure that the items are checked via the bus and actually added to the game.
 
         modEventBus.addListener(this::commonSetup);
 
@@ -36,12 +40,15 @@ public class Tutorialmod {
 
     }
     // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        // event.getTabKey(): Retrieves the tab key of the currently selected creative mode tab.
+        // CreativeModeTabs.INGREDIENTS: Represents the "Ingredients" tab in the creative mode inventory.
+        // event.accept(Moditems.SAPPHIRE): Adds the SAPPHIRE item (previously registered in Moditems) to the tab so players can see and interact with it.
 
-
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) { //Adds the SAPPHIRE item to the creative mode Ingredients tab during the appropriate event.
+            event.accept(Moditems.SAPPHIRE);
+        }
     }
-
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event){
